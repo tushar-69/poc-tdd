@@ -7,20 +7,6 @@ namespace TDDPOC.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        //private static readonly Dictionary<string, int> Summaries = new()
-        //{
-        //    { "Freezing", 1 },
-        //    { "Bracing", 4 },
-        //    { "Chilly", 8 },
-        //    { "Cool", 12 },
-        //    { "Mild", 16 },
-        //    { "Warm", 24 },
-        //    { "Balmy", 30 },
-        //    { "Hot", 40 }
-        //};
-
-        //private readonly ILogger<WeatherForecastController> _logger;
-
         private readonly IWeatherForecastService _weatherForecastService;
 
         public WeatherForecastController(IWeatherForecastService weatherForecastService)
