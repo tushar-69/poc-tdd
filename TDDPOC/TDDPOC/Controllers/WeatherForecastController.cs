@@ -17,7 +17,7 @@ namespace TDDPOC.Controllers
         [HttpGet("{summary}")]
         [ProducesResponseType(typeof(WeatherForecast), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetBySummary(string summary)
+        public IActionResult GetBySummary(string summary)
         {
             if (string.IsNullOrEmpty(summary))
                 throw new ArgumentNullException(nameof(summary));

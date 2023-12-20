@@ -1,17 +1,13 @@
-using AutoFixture;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
 using TDDPOC.Controllers;
 using TDDPOC.Service;
 
-namespace TDDPOC.Test
+namespace TDDPOC.Test.ControllerTest
 {
     public class WeatherForecastTest
     {
-        private WeatherForecastController _controller;
-        private IFixture _fixture;
-        private Mock<IWeatherForecastService> _mockWeatherForecastService;
+        private readonly WeatherForecastController _controller;
+        private readonly IFixture _fixture;
+        private readonly Mock<IWeatherForecastService> _mockWeatherForecastService;
 
         public WeatherForecastTest()
         {
@@ -22,12 +18,12 @@ namespace TDDPOC.Test
         }
 
         [Fact]
-        public async void Get_WeatherForeCasts_ReturnsWeather()
+        public void Get_WeatherForeCasts_ReturnsWeather()
         {
             var weatherForecast = _fixture.Create<WeatherForecast>();
-            _mockWeatherForecastService.Setup(w => w.GetById(weatherForecast.Summary)).Returns(weatherForecast);
+            _mockWeatherForecastService.Setup(forecast => forecast.GetById(weatherForecast.Summary)).Returns(weatherForecast);
 
-            var result = await _controller.GetBySummary(weatherForecast.Summary);
+            var result = _controller.GetBySummary(weatherForecast.Summary);
 
             var objectResult = result.Should().BeOfType<OkObjectResult>().Subject;
             objectResult.StatusCode.Should().Be(200);
@@ -37,23 +33,23 @@ namespace TDDPOC.Test
         }
 
         [Fact]
-        public async void Get_InvalidSummary_ReturnsNotFound()
+        public void Get_InvalidSummary_ReturnsNotFound()
         {
             WeatherForecast weatherForecast = null;
             string summary = new Guid().ToString();
-            _mockWeatherForecastService.Setup(w => w.GetById(summary)).Returns(weatherForecast);
+            _mockWeatherForecastService.Setup(forecast => forecast.GetById(summary)).Returns(weatherForecast);
 
-            var result = await _controller.GetBySummary(summary);
+            var result = _controller.GetBySummary(summary);
 
             var objectResult = result.Should().BeOfType<NotFoundResult>();
         }
 
         [Fact]
-        public async void Get_InvalidNullSummary_ThrowsArgumentNullException()
+        public void Get_InvalidNullSummary_ThrowsArgumentNullException()
         {
             try
             {
-                var result = await _controller.GetBySummary(null);
+                var result = _controller.GetBySummary(null);
             }
             catch (ArgumentNullException ex)
             {
