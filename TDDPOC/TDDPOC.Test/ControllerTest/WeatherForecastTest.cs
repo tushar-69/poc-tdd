@@ -28,7 +28,6 @@ namespace TDDPOC.Test.ControllerTest
             var objectResult = result.Should().BeOfType<OkObjectResult>().Subject;
             objectResult.StatusCode.Should().Be(200);
             var actualValue = objectResult.Value.Should().BeOfType<WeatherForecast>().Subject;
-            actualValue.Should().NotBeNull();
             actualValue.Equals(weatherForecast);
         }
 
